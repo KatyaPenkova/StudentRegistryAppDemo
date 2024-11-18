@@ -8,7 +8,7 @@ pipeline{
         nodejs "${NODE_VERSIONS}"
     }
 
-    stage{
+    stage
         ('Checkout'){
             steps{
                 git branch: 'main', url:'https://github.com/KatyaPenkova/StudentRegistryAppDemo'
@@ -22,15 +22,22 @@ pipeline{
                     }
                 }   
             }
-        }
+        
 
         stage("Start application and run tests")
         {
             steps{
                 script{
-                    bat 'npm start &'
-                    bat 'wait-on http://localhost:8090'
-                    bat 'npm test'
+                    bat 'start /b npm start'
+                }
+            }
+        }
+
+        stage("run tests")
+        {
+            steps{
+                script{
+                    bat 'start npm test'
                 }
             }
         }
